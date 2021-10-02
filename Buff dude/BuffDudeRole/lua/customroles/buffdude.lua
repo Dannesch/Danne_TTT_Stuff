@@ -1,7 +1,7 @@
 local ROLE = {}
 
 ROLE.nameraw = "buffdude"
-ROLE.name = "BuffDude"
+ROLE.name = "Buff Dude"
 ROLE.nameplural = "Buff Dudes"
 ROLE.nameext = "a Buff Dude"
 ROLE.nameshort = "bd"
@@ -54,34 +54,34 @@ if SERVER then
         end
     end)
     hook.Add("PlayerCanPickupWeapon", "bd_nopickup", function( ply, weapon )
-        if(ply:IsBuffDude()) then
+        if (ply:IsBuffDude()) then
             return false
         end
     end )
     hook.Add("ScalePlayerDamage", "bd_damagechanger", function(ply, hitgroup, dmginfo)
-        if(ply:IsBuffDude()) then
-            dmginfo:SetDamage(GetConVar("ttt_buffdude_damage"):GetInt())
-        end 
+        if GetRoundState() ~= ROUND_ACTIVE then return end
+        if (ply:IsBuffDude()) then
+            local weap_class = WEPS.GetClass(weapon)
+            return weap_class == "weapon_zm_improvised" or weap_class == "weapon_ttt_unarmed" or weap_class == "weapon_zm_carry"
+        end
     end)
     hook.Add("TTTCheckForWin", "bd_chckforwin", function()
-        if not GetConVar("ttt_debug_preventwin"):GetInt() then
-            local nonBDAlive = false
-            local hasBD = false
-            for _, ply in ipairs(player.GetAll()) do
-                if ply:IsBuffDude() and ply:Alive() then
-                    hasBD = true
-                end
-        
-                if not ply:IsSpec() and ply:Alive() and not ply:IsBuffDude() and not ply:IsJesterTeam() then
-                    nonBDAlive = true
+        local buffdude_alive = false
+        local other_alive = false
+        for _, v in ipairs(player.GetAll()) do
+            if v:Alive() and v:IsTerror() then
+                if v:IsBuffDude() then
+                    buffdude_alive = true
+                elseif not v:ShouldActLikeJester() then
+                    other_alive = true
                 end
             end
-        
-            if nonBDAlive and hasBD then
-                return WIN_NONE
-            elseif hasBD then
-                return WIN_BUFFDUDE
-            end
+        end
+
+        if buffdude_alive and not other_alive then
+            return WIN_BUFFDUDE
+        elseif buffdude_alive then
+            return WIN_NONE
         end
     end)
     hook.Add("TTTPrintResultMessage", "bd_PrintResultMessage", function(type)
@@ -107,7 +107,7 @@ else
     end)
     hook.Add("TTTScoringWinTitle", "bd_ScoringWinTitle", function(wintype, wintitles, title, secondaryWinRole)
         if wintype == WIN_BUFFDUDE then
-            return { txt = "hilite_win_role_singular", params = { role = ROLE_STRINGS[ROLE_BUFFDUDE] }, c = ROLE_COLORS[ROLE_BUFFDUDE] }
+            return { txt = "hilite_win_role_singular", params = { role = ROLE_STRINGS[ROLE_BUFFDUDE]:upper() }, c = ROLE_COLORS[ROLE_BUFFDUDE] }
         end
     end)
 end
