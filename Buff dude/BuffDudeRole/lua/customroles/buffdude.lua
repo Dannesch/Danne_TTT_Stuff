@@ -69,7 +69,7 @@ if SERVER then
         local buffdude_alive = false
         local other_alive = false
         for _, v in ipairs(player.GetAll()) do
-            if v:Alive() and v:IsTerror() then
+            if v:Alive() and not v:IsSpec() then
                 if v:IsBuffDude() then
                     buffdude_alive = true
                 elseif not v:ShouldActLikeJester() then
