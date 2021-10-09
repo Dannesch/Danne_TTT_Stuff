@@ -55,7 +55,11 @@ if SERVER then
     end)
     hook.Add("PlayerCanPickupWeapon", "bd_nopickup", function( ply, weapon )
         if (ply:IsBuffDude()) then
-            return false
+            if weapon == "weapon_zm_improvised" or weapon == "weapon_ttt_unarmed" or weapon == "weapon_zm_carry" then 
+                return true
+            else
+                return false
+            end
         end
     end )
     hook.Add("ScalePlayerDamage", "bd_damagechanger", function(ply, hitgroup, dmginfo)
