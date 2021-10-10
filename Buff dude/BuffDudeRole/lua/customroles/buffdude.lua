@@ -55,6 +55,7 @@ if SERVER then
     end)
     hook.Add("PlayerCanPickupWeapon", "bd_nopickup", function( ply, weapon )
         if (ply:IsBuffDude()) then
+            print(weapon)
             if weapon == "weapon_zm_improvised" or weapon == "weapon_ttt_unarmed" or weapon == "weapon_zm_carry" then 
                 return true
             else
