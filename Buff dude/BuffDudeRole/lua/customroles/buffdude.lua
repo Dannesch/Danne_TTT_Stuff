@@ -24,7 +24,7 @@ ROLE.maxhealth = 150
 ROLE.translations = {}
 
 if SERVER then
-    CreateConVar("ttt_buffdude_damage", "40", FCVAR_NONE, "How much damage a Buff Dude does")
+    CreateConVar("ttt_buffdude_damage", "2.5", FCVAR_NONE, "How much damage a Buff Dude does")
 end
 ROLE.convars = {}
 table.insert(ROLE.convars, {
@@ -66,8 +66,12 @@ if SERVER then
     hook.Add("ScalePlayerDamage", "bd_damagechanger", function(ply, hitgroup, dmginfo)
         if GetRoundState() ~= ROUND_ACTIVE then return end
         if (ply:IsBuffDude()) then
-            local weap_class = WEPS.GetClass(weapon)
-            return weap_class == "weapon_zm_improvised" or weap_class == "weapon_ttt_unarmed" or weap_class == "weapon_zm_carry"
+            local weap_class = ply.GetActiveWeapon().GetClass()
+            if weap_class == "weapon_zm_improvised" or weap_class == "weapon_zm_carry" or weap_class == "weapon_ttt_unarmed" then
+                dmginfo:ScalePlayerDamage(GetConVar("ttt_buffdude_damage"):GetFloat())
+            else
+                dmginfo:ScalePlayerDamage(1)
+            end
         end
     end)
     hook.Add("TTTCheckForWin", "bd_chckforwin", function()

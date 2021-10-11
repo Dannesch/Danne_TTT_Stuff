@@ -34,7 +34,7 @@ SWEP.Kind = WEAPON_EQUIP1
 SWEP.WeaponID = AMMO_M249
 
 
-SWEP.Primary.Damage = 15
+SWEP.Primary.Damage = 17
 SWEP.Primary.Delay = 0.08
 SWEP.Primary.Cone = 0.02
 SWEP.Primary.ClipSize = 500
@@ -54,7 +54,7 @@ SWEP.ViewModelFOV = 80
 SWEP.ViewModel = "models/weapons/v_deat_m249para.mdl"
 SWEP.WorldModel = "models/weapons/w_blopsminigun.mdl"
 
-SWEP.HeadshotMultiplier = 2
+SWEP.HeadshotMultiplier = 5
 
 SWEP.IronSightsPos = Vector(-5.96, -5.119, 2.349)
 SWEP.IronSightsAng = Vector(0, 0, 0)
