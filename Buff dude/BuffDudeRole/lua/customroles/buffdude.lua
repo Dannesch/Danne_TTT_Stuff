@@ -43,14 +43,12 @@ hook.Add("Initialize", "bd_Initialize", function()
 end)
 
 if SERVER then
-    hook.Add("TTTBeginRound", "bd_roundbegin", function()
-        for _, ply in ipairs(player.GetAll()) do
-            if (ply:IsBuffDude()) then
-                ply:StripAll()
-                ply:Give("weapon_zm_improvised")
-                ply:Give("weapon_ttt_unarmed")
-                ply:Give("weapon_zm_carry")
-            end
+    hook.Add("TTTPlayerRoleChanged", "bd_playerrolechange", function(ply, oldRole, newRole)
+        if newRole == ROLE_BUFFDUDE then
+            ply:StripAll()
+            ply:Give("weapon_zm_improvised")
+            ply:Give("weapon_ttt_unarmed")
+            ply:Give("weapon_zm_carry")
         end
     end)
     hook.Add("PlayerCanPickupWeapon", "bd_nopickup", function( ply, weapon )
