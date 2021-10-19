@@ -34,7 +34,7 @@ SWEP.Kind = WEAPON_EQUIP1
 SWEP.WeaponID = AMMO_M249
 
 
-SWEP.Primary.Damage = 17
+SWEP.Primary.Damage = 16
 SWEP.Primary.Delay = 0.08
 SWEP.Primary.Cone = 0.02
 SWEP.Primary.ClipSize = 500
